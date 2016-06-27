@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="directiveApp">
+<head>
+    <meta charset="UTF-8">
+    <title>외부 디렉티브의 사용</title>
+    <!-- angular-moment-picker용 css -->
+    <link rel="stylesheet" href="css/angular-moment-picker.css"/>
+</head>
+<body ng-controller="directiveCtrl">
+<input moment-picker="birthDate"
+       ng-model="birthDate"
+       format="YYYY-MM-DD"
+       min-view="month"
+       max-view="month"
+       locale="ko"/>
+<script src="js/angular.min.js"></script>
+<!-- moment css -->
+<script src="js/moment-with-locales.js"></script>
+<!-- angular-moment-picker import -->
+<script src="js/angular-moment-picker.js"></script>
+<script>
+
+    var app = angular.module("directiveApp",["moment-picker"]);
+
+    app.controller("directiveCtrl",["$scope",function ($scope) {
+        //$scope.birthDate = new Date("2012-02-12");
+    }])
+</script>
+</body>
+</html>

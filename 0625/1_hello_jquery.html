@@ -21,6 +21,32 @@
     </style>
 </head>
 <body>
+    <h1>jQuery를 이용해봅시다.</h1>
+    <input id="txt"/>
+    <h2>안녕하세요?</h2>
+    <h3>여기도~</h3>
+    <!-- jquery import -->
+    <script src="js/jquery.js"></script>
+    <script>
+        //우리가 코딩하는 곳(자바스크립트 주석)
 
+        //id가 txt인 input요소에 keyup이벤트리스너를 붙이고 핸들러를 처리
+        $("#txt").keyup(function(){
+
+            //id가 txt인 input요소에 유저가 입력한 값(value)을 얻어옴
+            var value = $("#txt").val();
+
+            //h2에 그 값을 대입
+            $("h2").text(value);
+
+            //h3에 그 값을 대입
+            $("h3").text(value);
+
+           // alert(value);
+
+        });
+
+
+    </script>
 </body>
 </html>

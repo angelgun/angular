@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="filterApp">
+<head>
+    <meta charset="UTF-8">
+    <title>필터 예제</title>
+</head>
+<body ng-controller="filterCtrl">
+<!-- filter는 '|'
+    1) currency :  통화
+    2) date : 날짜
+
+ -->
+<h1>핸드폰 가격 : {{price|currency:undefined:0}}</h1>
+<hr/>
+<h1>개봉일 : <strong ng-bind="release|date:'yyyy년 MM월 dd일'"></strong></h1>
+<script src="js/angular.min.js"></script>
+<!-- 나라의 i18n 라이브러리를 import -->
+<script src="js/angular-locale_ko.js"></script>
+<script>
+    var app = angular.module("filterApp",[]);
+
+
+    app.controller("filterCtrl",["$scope",function($scope) {
+        $scope.price = 657459;
+        $scope.release = new Date("2016-06-23");
+    }]);
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>자바스크립트 배열</title>
+</head>
+<body>
+<script>
+
+    var mamamu = ["화사","솔라"];
+
+    //자바스크립트 배열의 메서드
+    //1) pop() : 제일 뒤를 날림
+    //2) push() : 제일뒤에 추가
+    //3) shift() : 제일앞을 지움
+    //4) unshift() : 제일앞에 추가
+    //5) splice(인덱스,갯수) : 인덱스부터 갯수만큼 삭제
+    //6) splice(인덱스,0,객체) : 인덱스에 객체를 추가
+
+    mamamu.pop();//화사
+    mamamu.push("문별")//화사,문별
+    mamamu.push("휘인")//화사,문별,휘인
+    mamamu.shift();//문별,휘인
+    mamamu.unshift("솔라");//솔라,문별,휘인
+    mamamu.splice(1,1);//솔라,휘인
+    mamamu.splice(1,0,"화사");//솔라,화사,휘인
+
+    alert(mamamu);
+
+
+
+</script>
+</body>
+</html>

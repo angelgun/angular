@@ -1,10 +1,9 @@
 <!doctype html>
-<html>
+<html ng-app="boxOfficeApp">
   <head>
   	<meta charset="UTF-8" />
   	<title>Movie BoxOffice</title>
-    <link href="css/bootstrap.min.css" 
-    rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/main.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/kakao.font.css" />
     <link rel="stylesheet" href="css/font-awesome.min.css" />
@@ -16,10 +15,25 @@
       </div>
     </div>
     <div class="main">
-      <div class="container">
-        <h2>박스오피스</h2>
+      <div class="container" ng-controller="mainCtrl">
+        <h2>{{title}}</h2>
   <ul>
-      
+    <li class="col-md-4" ng-repeat="movie in movies">
+      <div class="thumbnail">
+        <img src="poster/{{movie.poster}}" />
+        <p class="title" ng-bind="movie.name"></p>
+        <p class="price">{{movie.price|currency:undefined:0}}</p>
+        <p class="date" ng-bind="movie.release|date:'yyyy년 M월 d일'"></p>
+        <div class="rating">
+          <p class="likes" ng-click="increaseLikes(movie)">
+            <i class="fa fa-thumbs-up"></i>
+            {{movie.likes}}</p>
+          <p class="dislikes" ng-click="increaseDislikes(movies,$index)">
+            <i class="fa fa-thumbs-down"></i>
+            {{movie.dislikes}}</p>
+        </div>
+      </div>
+    </li>
   </ul> 
       </div>
     </div>
@@ -28,6 +42,42 @@
         <h2>&copy; 2016 ani</h2>
       </div>
     </div>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-locale_ko.js"></script>
+<script>
 
+  var app = angular.module("boxOfficeApp",[]);
+
+  app.controller("mainCtrl",["$scope",function ($scope) {
+
+    $scope.title = "6월 4주차 박스오피스";
+
+    $scope.increaseLikes = function(movie) {
+      movie.likes++;
+    }//increaseLikes
+
+    $scope.increaseDislikes = function(movies,$index) {
+      //$index는 ng-repeat안에서 쓰는 angular문법(해당 index)
+
+      //angular는 DI(Dependency Injection:의존성 주입)
+      //필요한 거 있으면 받아서 써라.
+
+      movies[$index].dislikes++;s
+
+    }//increaseDislikes
+
+    $scope.movies = [
+      {"no":0,"poster":"p1.png","director":"롤랜드 에머리히","name":"인디펜던스 데이:리써전스","likes":0,"dislikes":122,"release":new Date("2016-06-22"),"price":18900},
+      {"no":1,"poster":"p2.png","director":"이경미","name":"비밀은 없다","likes":56,"dislikes":12,"release":new Date("2016-06-23"),"price":13000},
+      {"no":2,"poster":"p3.png","director":"존 파브로","name":"정글북","likes":77,"dislikes":32,"release":new Date("2016-06-09"),"price":9800},
+      {"no":3,"poster":"p4.png","director":"박찬욱","name":"아가씨","likes":106,"dislikes":12,"release":new Date("2016-06-01"),"price":12400},
+      {"no":4,"poster":"p5.png","director":"제임스 완","name":"컨저링2","likes":123,"dislikes":56,"release":new Date("2016-06-09"),"price":15000},
+      {"no":5,"poster":"p6.png","director":"아리엘 브로멘","name":"크리미널","likes":33,"dislikes":7,"release":new Date("2016-06-22"),"price":17000}
+    ];
+    
+  }]);//controller
+
+
+</script>
   </body>
 </html>

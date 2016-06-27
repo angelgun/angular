@@ -39,9 +39,74 @@
 	<h1>영화목록<em>?</em>개</h1>
 	<button id="deleteBtn">삭제</button>
 	<ul>
-        
+
 	</ul>
- 
+
+<!-- underscore의 템플릿 만들기 -->
+<script type="text/template" id="movieTmp">
+<% _.each(movieList,function(movie){ %>
+	<li>
+		<img src="poster/<%=movie.poster%>" width="100" />
+		<h3><%=movie.name%></h3>
+	</li>
+<%})%>
+</script>
+
+ <script src="js/jquery.js"></script>
+<!-- underscore.js 불러오기 -->
+<script src="js/underscore-min.js"></script>
+<script>
+
+	//원래는 당연히 서버에서 ajax로 불러와야 하지만
+	//이 예제의 핵심포인트는 아니기 때문에 그냥 복사
+	var movies = [
+		{"no":0,"poster":"p1.png","director":"롤랜드 에머리히","name":"인디펜던스 데이:리써전스","likes":106,"dislikes":12},
+		{"no":1,"poster":"p2.png","director":"이경미","name":"비밀은 없다","likes":106,"dislikes":12},
+		{"no":2,"poster":"p3.png","director":"존 파브로","name":"정글북","likes":106,"dislikes":12},
+		{"no":3,"poster":"p4.png","director":"박찬욱","name":"아가씨","likes":106,"dislikes":12},
+		{"no":4,"poster":"p5.png","director":"제임스 완","name":"컨저링2","likes":106,"dislikes":12},
+		{"no":5,"poster":"p6.png","director":"아리엘 브로멘","name":"크리미널","likes":106,"dislikes":12}
+	];
+
+
+	var tmp = _.template($("#movieTmp").html());
+
+	var markup = tmp({"movieList":movies});
+
+	$("ul").append(markup);
+
+	//em을 선택해서 갯수를 갱신
+	$("em").text(movies.length);
+
+	$("#deleteBtn").click(function(){
+
+		$("li:last").remove();
+		$("em").text($("li").length);
+
+	});
+
+//	$(movies).each(function () {
+//		//여기서 this가 바로 영화한개객체
+//
+//		//li요소 객체, img요소 객체, h2요소 객체
+//		var $li = $("<li>");
+//		var $img = $("<img>").attr({"src":"poster/"+this.poster,"width":100});
+//		var $h3 = $("<h3>").text(this.name);
+//
+//		$li.append($img,$h3).appendTo("ul");
+//
+//	});
+
+
+//	$.ajax("json/movies.json",{
+//		success:function(json) {
+//			$(json).each(function() {
+//
+//			})
+//		}
+//	});
+
+</script>
 </body>
 </html>
 

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="scopeApp">
+<head>
+    <meta charset="UTF-8">
+    <title>스코프에 대해서</title>
+</head>
+<body>
+    <div ng-controller="parentCtrl">
+        <h1>영화정보 : {{name}} / 감독 : {{director}}</h1>
+        <ul ng-controller="childCtrl">
+            <li>영화정보 : {{name}} / 감독 : {{director}}</li>
+        </ul>
+    </div>
+
+    <div ng-controller="anotherCtrl">
+        영화정보 : {{name}} / 감독 : {{director}}</li>
+    </div>
+<script src="js/angular.min.js"></script>
+<script>
+    var app = angular.module("scopeApp",[]);
+    //parentCtrl안의 스코프가 존재하고
+    //childCtrl안의 스코프가 존재함(부모와 자식관계)
+    app.controller("parentCtrl",["$scope",function ($scope) {
+        $scope.name = "주토피아";
+    }]);
+
+    app.controller("childCtrl",["$scope",function ($scope) {
+        $scope.name ="아가씨";
+        $scope.director = "박찬욱";
+    }]);
+
+    app.controller("anotherCtrl",["$scope",function ($scope) {
+
+    }]);
+
+
+
+</script>
+</body>
+</html>

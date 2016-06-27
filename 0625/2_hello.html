@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<!-- 해당페이지를 angular앱으로 지정 -->
+<html ng-app="helloApp">
 <head>
 <meta charset="UTF-8">
 <title>Hello Angular.js</title>
@@ -18,16 +19,59 @@
 	}
 </style>
 </head>
+<body >
 <h1>Angular를 이용해봅시다.^-^</h1>
-<body>
- 	<div>
- 		<input type="text"/>
- 		<h2></h2>
-        <h3></h3>
-	</div>
-   
+<div ng-controller="helloCtrl">
+<!-- ng-model을 이용하면 이 요소자체가 모델-->
+<input type="text" ng-model="txt"/>
+	<!-- View에서 모델데이터를 바인딩할때 {{}}, ng-bind를 사용 -->
+<h2>{{txt}}</h2>
+<h3 ng-bind="txt"></h3>
+</div>
+<!--- 1) angular import --->
+<script src="js/angular.min.js"></script>
+<script>
+
+	//Angular는 모듈기반
+	var app = angular.module("helloApp",[]);
+
+
+	//controller 를 설정(선언)
+	app.controller("helloCtrl",["$scope",function($scope) {
+		//$scope : 모델이 살아있는 영역
+
+		//컨트롤러에서는 $scope. 해서 모델에 접근
+
+
+	}]);
+
+
+
+	/*
+		MVC
+
+		1) M(model) : 데이터 그 자체
+		2) V(View) : 유저인터페이스(이벤트 발생, 모델값을 출력)
+		3) C(controller) : V와 M의 연결
+		4) Router : 주소변경
+
+
+	 */
+
+</script>
  </body>
  </html>
+<!--
+주요 단축키
+
+1) 자동완성 : ctrl + space
+2) 실행 : ctrl + shift + F10
+3) 한 줄 지우기 : ctrl + Y
+4) 한 줄 복사 : ctrl + D
+5) 이동 : ctrl + shift + 방향키
+6) 메뉴 토글 : alt + 1
+
+-->
  
  
  

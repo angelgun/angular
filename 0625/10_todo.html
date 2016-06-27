@@ -1,11 +1,11 @@
 <!doctype html>
-<html>
+<html ng-app="todoApp">
 <head>
     <meta charset="UTF-8">
     <title>할일관리프로그램</title>
     <link rel="stylesheet" href="css/kakao.font.css"/>
-    <link rel="stylesheet" 
-          href="css/angular-switcher.css"/>
+    <!-- angular-switcher.css -->
+    <link rel="stylesheet" href="css/angular-switcher.css"/>
     <style>
         body {
             font:200 20px "Kakao",sans-serif;
@@ -33,8 +33,6 @@
             box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
         }
 
-       
-
         ul {
             padding:0;
         }
@@ -43,36 +41,127 @@
             list-style: none;
         }
         li.end {
-            color:deepskyblue;
+            color:#03A9F4;
         }
-        
-        
+
+        .switcher-line:before {
+            height:20px;
+        }
+
+         .switcher-line:before { background: #E91E63; }
+        .active .switcher-line:before { background: #03A9F4; }
         
     </style>
 </head>
 <body >
-<div id="wrap">
-<h1>님의 할일목록</h1>
+<div id="wrap" ng-controller="todoCtrl">
+<h1>{{name}}님의 할일목록</h1>
 <p>
-    전체할일 : <em></em>개 
+    전체할일 : <em ng-bind="todos.length"></em>개
     / 
-    미완료 : <span></span>개
-    <button >완료된 할일제거</button>
+    미완료 : <span ng-bind="getIncompleteSize(todos)"></span>개
+    <button ng-click="removeCompleteAllTodo(todos)">완료된 할일제거</button>
 </p>
-<form>
+<form method="post" action="insertTodo.php" ng-submit="writeTodo(todos,title,$event)">
 <fieldset>
     <legend>할일입력폼</legend>
-    <input type="text" 
+    <input type="text" ng-model="title"
            placeholder="할 일입력"/>
     <button>입력</button>
 </fieldset>
 </form>
 <h2>할일목록</h2>
 <ul>
-
+    <li ng-repeat="todo in todos" ng-class="{end:todo.end}">
+        <switcher ng-model="todo.end" true-label=""  false-label="" ></switcher>
+        {{todo.title}}
+        <button ng-click="deleteTodo($index,todos)">삭제</button>
+    </li>
 </ul>
 </div>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-switcher.js"></script>
+<script>
 
+    var app = angular.module("todoApp",["switcher"]);
+
+    //생성자 함수
+    function Todo(title,end) {
+        this.title = title;
+        this.end = end||false;
+    }//생성자 Todo함수
+
+    app.controller("todoCtrl",["$scope",function($scope){
+
+        $scope.removeCompleteAllTodo = function(todos) {
+
+            //미완료된 할일을 입력할 임시배열
+            var tmp = [];
+
+            //todos만큼 for문 돌림
+            angular.forEach(todos,function(todo,index){
+                if(!todo.end) {
+                    tmp.push(todo);
+                }//if end
+            });//forEach() end
+
+            $scope.todos = tmp;
+
+        }//removeCompleteAllTodo() end
+        
+        $scope.getIncompleteSize = function (todos) {
+
+            var size = 0;
+
+            //할 일 목록으로 for문 돌리고
+            angular.forEach(todos,function(todo,index){
+                //만약 todo.end가 false일때
+                if(!todo.end) {
+                    size++;//사이즈 갯수 증가
+                }//if end
+            });
+
+            return size;
+        }//getIncompleteSize() end
+
+        $scope.deleteTodo = function($index,todos) {
+
+            todos.splice($index,1);
+
+        }//deleteTodo() end
+
+        //할 일을 입력
+        $scope.writeTodo = function(todos,title,$event) {
+            //todos : 할일 목록 배열
+            //title : 유저가 입력한 글자
+            //$event : 이벤트객체
+
+            //todo객체 생성
+            var todo = new Todo(title);
+
+            // 배열에 입력
+            todos.push(todo);
+
+            //input안의 글자를 비우기
+            $scope.title = "";
+
+            //브라우저의 기본기능 막기
+            $event.preventDefault();
+
+        }//writeTodo() end
+
+        $scope.name = "김연아";
+
+        $scope.todos = [
+            new Todo("저녁 약속"),
+            new Todo("영화 보기",true),
+            new Todo("이메일 확인"),
+            new Todo("점심 먹기",true)
+        ];
+
+    }]);
+
+</script>
 </body>
 </html>
 

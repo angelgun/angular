@@ -10,7 +10,17 @@
             box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
         }
 
+        #img1 {
+            display: none;
+        }
 
+        #toggleImg  {
+            transform:perspective(500px) scale(1) rotateY(0deg);
+            transition: .3s ease;
+        }
+        #toggleImg.small {
+            transform:perspective(500px) scale(.5) rotateY(720deg);
+        }
     </style>
 </head>
 <body>
@@ -20,9 +30,32 @@
             <input type="checkbox" id="toggle">
             <label for="toggle">숨기기</label>
         </p>
-        <img src="poster/p6.png" width="300" id="toggleImg"/>
+        <img src="poster/p7.png" width="300" id="toggleImg" />
         <img src="poster/p2.png" width="300" id="img1"/>
         <img src="poster/p4.png" width="300" id="img2"/>
     </div>
+<script src="js/jquery.js"></script>
+<script>
+
+    $("#toggle").change(function () {
+        //id가 toggle인 input요소에서 값을 얻어와야 합니다.
+        var flag = $("#toggle").prop("checked");
+
+        if(flag) {
+            $("label").text("보이기");
+            $("#img1").show();
+            $("#img2").hide();
+            $("#toggleImg").addClass("small");
+        }else {
+            $("label").text("숨기기");
+            $("#img1").hide();
+            $("#img2").show();
+            $("#toggleImg").removeClass("small");
+        }//if~else end
+
+        //alert(flag);
+    });
+
+</script>
 </body>
 </html>
