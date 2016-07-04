@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html ng-app="ajaxApp">
+<head>
+<meta charset="UTF-8">
+<title>할일 목록</title>
+<style>
+body {
+	margin:0;
+}
+	#wrap {
+	width:1000px;margin:auto;border:1px solid #333;}
+	
+	#header {
+	width:1000px;
+	background:#aaa;
+	border-top:1px solid #aaa;
+	}
+	
+	#header ul {
+		margin:0;
+		padding:0;
+		list-style: none;
+		overflow: hidden;
+	}
+	
+	#header li {
+		float:left;
+		padding:5px 10px;
+	}
+	#content {
+		min-height:500px;
+	}
+	#footer {
+	height:100px;
+	line-height:100px;
+	text-align:center;
+	border-top:1px solid #333}
+	
+</style>
+</head>
+<body>
+<div id="wrap">
+	<div id="header">
+		<h1>로고</h1>
+		<ul>
+			<li><a href="#todo">할일목록</a>
+			<li><a href="#write">할일쓰기</a>
+		</ul>
+	</div>
+	<div id="content">
+		<ng-view></ng-view>
+	</div>
+	<div id="footer">&copy; 2016 ani.com</div>
+</div>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-route.min.js"></script>
+<script>
+
+	var app = angular.module("ajaxApp",["ngRoute"]);
+
+	//config설정
+	app.config(function($routeProvider) {
+
+		$routeProvider.when("/todo",{
+			templateUrl:"view/todo.html",
+			controller:"todoCtrl"
+		});
+		$routeProvider.when("/write",{
+			templateUrl:"view/write.html",
+			controller:"writeCtrl"
+		});
+		$routeProvider.otherwise({"redirectTo":"/todo"});
+	});
+
+	app.controller("writeCtrl",["$scope","$http","$location",
+		function($scope,$http,$location){
+		//$location은 location객체를 angular에서 추상화
+
+		$scope.writeTodo = function(title) {
+
+			var promise = $http({
+				url:"https://api.mlab.com/api/1/databases/ani2/collections/todos",
+				params:{apiKey:"mEnc5U1gz4CKrRrgzKUUkIo2nLSbPNyO"},
+				method:"POST",//insert
+				data:{"title":title,"end":false}
+			});
+
+			promise.error(function(data,status,header,config) {
+				alert("에러~");
+			});
+
+			promise.success(function(data,status,header,config) {
+				//할 일 목록으로 주소이동
+				$location.path("/todo");
+
+			});
+
+
+		}//writeTodo() end
+
+
+	}]);//writeCtrl() end
+
+	app.controller("todoCtrl",["$scope","$http",function($scope,$http){
+		   //ng-show니까 기본 안보이게 하려면 false
+			$scope.loader = false;
+		   $scope.todos = [];
+
+		//todo를 삭제하는 함수
+		$scope.deleteTodo = function(todo) {
+			var id = todo._id.$oid;
+
+			var promise = $http({
+				url:"https://api.mlab.com/api/1/databases/ani2/collections/todos/"+id,
+				params:{apiKey:"mEnc5U1gz4CKrRrgzKUUkIo2nLSbPNyO"},
+				method:"DELETE"//delete
+			});
+
+			promise.error(function(data,status,header,config) {
+				alert("에러~");
+			});
+
+			promise.success(function(data,status,header,config) {
+				//업데이트 성공했으니까 다시 불러오기
+				getTodos();
+			});
+
+		}//deleteTodo() end
+
+		//todo를 업데이트하는 함수
+		$scope.updateTodo = function(todo) {
+
+			var id = todo._id.$oid;
+
+			var promise = $http({
+				url:"https://api.mlab.com/api/1/databases/ani2/collections/todos/"+id,
+				params:{apiKey:"mEnc5U1gz4CKrRrgzKUUkIo2nLSbPNyO"},
+				method:"PUT",//update
+				data:todo
+			});
+
+			promise.error(function(data,status,header,config) {
+				alert("에러~");
+			});
+
+			promise.success(function(data,status,header,config) {
+				//업데이트 성공했으니까 다시 불러오기
+				getTodos();
+			});
+
+
+
+		}//updateTodo() end
+
+
+
+			//$http를 이용하여 불러오는 함수
+		   function getTodos() {
+
+			   $scope.loader = true;
+
+			   $scope.todos = [];
+
+			   var promise = $http({
+				   url:"https://api.mlab.com/api/1/databases/ani2/collections/todos",
+				   method:"GET",
+				   params:{apiKey:"mEnc5U1gz4CKrRrgzKUUkIo2nLSbPNyO"}
+			   });
+
+			   promise.error(function(data,status,header,config){
+				   alert("에러:"+data);
+			   });
+
+			   promise.success(function(data,status,header,config){
+					//alert(data);
+				   //얻어온 데이터를 Model로
+				   $scope.todos = data;
+				   console.log(data);
+				   //loader숨김
+				   $scope.loader = false;
+			   });
+
+		   }//getTodos() end
+
+
+	   //호출
+	   getTodos();
+
+	}]);
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html ng-app="resourceApp">
+<head>
+<meta charset="UTF-8">
+<title>할일 목록</title>
+<style>
+body {
+	margin:0;
+}
+	#wrap {
+	width:1000px;margin:auto;border:1px solid #333;}
+	
+	#header {
+	width:1000px;
+	background:#aaa;
+	border-top:1px solid #aaa;
+	}
+	
+	#header ul {
+		margin:0;
+		padding:0;
+		list-style: none;
+		overflow: hidden;
+	}
+	
+	#header li {
+		float:left;
+		padding:5px 10px;
+	}
+	#content {
+		min-height:500px;
+	}
+	#footer {
+	height:100px;
+	line-height:100px;
+	text-align:center;
+	border-top:1px solid #333}
+	
+</style>
+</head>
+<body>
+<div id="wrap">
+	<div id="header">
+		<h1>로고</h1>
+		<ul>
+			<li><a href="#todo">할일목록</a>
+			<li><a href="#write">할일쓰기</a>
+		</ul>
+	</div>
+	<div id="content">
+		<ng-view></ng-view>
+	</div>
+	<div id="footer">&copy; 2016 ani.com</div>
+</div>
+<script src="js/angular.min.js"></script>
+<script src="js/angular-route.min.js"></script>
+<!-- $resource 사용하려면  import -->
+<script src="js/angular-resource.min.js"></script>
+<script>
+
+	//주소이동을 위한 route, RESTful을 편리하게 사용하는 resource객체
+	var app = angular.module("resourceApp",["ngRoute","ngResource"]);
+
+	//config설정
+	app.config(function($routeProvider) {
+
+		$routeProvider.when("/todo",{
+			templateUrl:"view/todo.html",
+			controller:"todoCtrl"
+		});
+		$routeProvider.when("/write",{
+			templateUrl:"view/write.html",
+			controller:"writeCtrl"
+		});
+		$routeProvider.otherwise({"redirectTo":"/todo"});
+	});
+
+	//여러 컨트롤러에서 공통적으로 사용하는 객체를 사용할때는
+	//service, factory
+	app.service("Todo",function($resource){
+		//$resource(주소,파라미터,메서드 확장)
+
+		//query() : 리스트 불러옴
+		//get() : 한개의 객체를 불러옴
+		//save() : 객체를 입력
+		//delete() : 객체를 지움
+
+		//update() : 우리가 확장시킬 메서드(객체를 수정)
+
+		return $resource(
+				"https://api.mlab.com/api/1/databases/ani2/collections/todos/:id",
+				{apiKey:"mEnc5U1gz4CKrRrgzKUUkIo2nLSbPNyO",
+				 id:"@_id.$oid"},
+				{update:{method:"PUT"}});
+	});
+
+	app.controller("writeCtrl",["$scope","Todo","$location",
+		function($scope,Todo,$location){
+			//Todo는 resource객체
+			//alert(Todo);
+
+		$scope.writeTodo = function(title) {
+
+			var todo = new Todo({title:title,end:false});
+
+			todo.$save(function() {
+				$location.path("/todo");
+			});
+
+		}//writeTodo() end
+
+	}]);//writeCtrl() end
+
+	app.controller("todoCtrl",["$scope","Todo",function($scope,Todo){
+		   //ng-show니까 기본 안보이게 하려면 false
+			$scope.loader = false;
+		   $scope.todos = [];
+
+		//todo를 삭제하는 함수
+		$scope.deleteTodo = function(todo) {
+
+			todo.$delete(function(todo) {
+				getTodos();
+			});
+
+		}//deleteTodo() end
+
+		//todo를 업데이트하는 함수
+		$scope.updateTodo = function(todo) {
+
+			todo.$update(function(todo) {
+				getTodos();
+			});
+
+		}//updateTodo() end
+
+
+
+			//$http를 이용하여 불러오는 함수
+		   function getTodos() {
+			   $scope.loader = true;
+			   $scope.todos = [];
+
+			   Todo.query(function(data) {
+				   $scope.todos = data;
+				   console.log(data);
+				   $scope.loader = false;
+			   },function() {
+				   alert("에러~");
+			   });
+
+		   }//getTodos() end
+
+	   //호출
+	   getTodos();
+
+	}]);
+
+
+
+</script>
+</body>
+</html>

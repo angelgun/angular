@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="customApp">
+<head>
+    <meta charset="UTF-8">
+    <title>커스텀 디렉티브</title>
+    <style>
+        .box {
+            border:10px solid #eee;
+            box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24),
+            0 17px 50px 0 rgba(0, 0, 0, 0.19);
+            position:absolute;
+            left:0;
+            top:0;
+            background:#fff;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body ng-controller="customCtrl">
+<canvas-box ng-repeat="data in datas"></canvas-box>
+
+<script src="js/angular.min.js"></script>
+<!-- 우리가 만든 커스텀 디렉티브를 import -->
+<script src="js/angular-canvas.box.js"></script>
+<script>
+
+    var app = angular.module("customApp",["canvas-box"]);
+
+    app.controller("customCtrl",["$scope",function($scope){
+
+        $scope.datas = [
+            {width:300,//요소의 크기
+            height:400,
+            x:120,//좌표
+            y:70,
+            w:230,// 캔버스안에 그려질 사각형의 크기
+            h:140,
+            bgColor:"#00bfff"    //사각형 색상
+            },
+            {width:200,//요소의 크기
+            height:200,
+            x:320,//좌표
+            y:150,
+            w:120,// 캔버스안에 그려질 사각형의 크기
+            h:100,
+            bgColor:"red"    //사각형 색상
+            },
+            {width:150,//요소의 크기
+            height:150,
+            x:0,//좌표
+            y:260,
+            w:80,// 캔버스안에 그려질 사각형의 크기
+            h:80,
+            bgColor:"green"    //사각형 색상
+            }
+
+
+        ];
+
+    }]);
+    //디렉티브의 이름을 낙타표기법으로 쓰면 실제는 'canvas-box'
+
+
+    //directive의 종류
+    //restrict : E(element),A(attribute),C(class),M
+    //compile(DOM에 붙기전:객체생성)  / link(객체생성이후 DOM에 붙었을때)
+
+
+</script>
+</body>
+</html>

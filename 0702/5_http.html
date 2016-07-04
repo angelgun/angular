@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html ng-app="httpApp">
+<head>
+<meta charset="UTF-8">
+<title>비동기통신을 위한 $http</title>
+    <style>
+        
+        li {
+            width:120px;
+            float: left;
+            list-style: none;
+            text-align: center;
+            
+        }
+        img {
+            display: block;
+        }
+        li.ng-animate {
+
+        }
+        li.ng-enter {
+            transition: 1s ease;
+            transform:perspective(600px) translateZ(1000px) rotateX(1440deg);
+        }
+        li.ng-enter-active {
+            transform:perspective(600px) translateZ(0) rotateX(0deg);
+        }
+    </style>
+</head>
+<body ng-controller="httpCtrl">
+	<button ng-click="startAjax()">시작</button>
+    <img src="img/loader.gif" ng-hide="loader"/>
+<ul>
+    <li ng-repeat="movie in movies">
+        <img ng-src="poster/{{movie.poster}}" width="100" />
+        <p ng-bind="movie.name"></p>
+    </li>
+</ul>
+<script src="js/angular.min.js"></script>
+<!-- 애니메이션 import -->
+<script src="js/angular-animate.min.js"></script>
+<script>
+
+    var app = angular.module("httpApp",["ngAnimate"]);
+
+    app.controller("httpCtrl",["$scope","$http","$timeout",
+        function($scope,$http,$timeout){
+        //$http가 jquery와 $.ajax()와 기능이 똑같습니다.
+        // 로더 처음에 안보임
+
+       //$timeout은 setTimeout으로 추상화(scope를 갱신)
+        //$scope.$apply()를 우리가 실행할 필요없음
+
+        $scope.loader = true;
+        //영화들
+        $scope.movies = [];
+
+        $scope.startAjax = function() {
+            //로더 보여주기
+            $scope.loader = false;
+
+            var promise = $http({
+                "url":"json/movies.json",
+                "method":"GET"
+            });
+
+            //에러콜백
+            promise.error(function(data,status,header,config){
+                //data : 서버로 넘어온 데이터
+                //status : 404,200, 프로토콜번호
+                //header : 요청프로토콜의 헤더
+                //config : 설정객체
+                alert(status);
+            });//error() end
+
+            //성공콜백
+            promise.success(function(data,status,header,config){
+                //이제 로더를 숨기기
+                $scope.loader = true;
+
+                var time = 100;
+
+                angular.forEach(data,function(movie,index){
+
+                    //0.1초후에 movies배열에 movie를 추가
+                    $timeout(function(){
+                        $scope.movies.push(movie);
+                    },time);
+                    time += 300;
+                });//forEach() end
+
+            });//success() end
+
+
+        }//startAjax() end
+
+
+
+//        $.ajax("json/movies.json",{
+//            type:"get",
+//            dataType:"json",
+//            error:function() {},
+//            success:function(json) {
+//              $scope.movies = json;
+//                $scope.$apply();
+//            }
+//        });
+
+    }]);
+
+
+
+</script>
+</body>
+</html>

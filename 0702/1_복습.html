@@ -1,0 +1,43 @@
+<!doctype html>
+<html ng-app="exApp">
+<head>
+    <meta charset="UTF-8">
+    <title>angular복습</title>
+</head>
+<body ng-controller="exCtrl">
+<h1>스마트폰 목록</h1>
+<label>검색 <input placeholder="이름검색" ng-model="x" kr-input /></label>
+<ul>
+    <li ng-repeat="phone in phones|filter:{name:x}|orderBy:'release'">이름 : {{phone.name}} /
+        가격 : {{phone.price|currency:undefined:0}} /
+        출시일 : {{phone.release|date:"yyyy년 MM월 dd일"}} </li>
+</ul>
+<!-- angular import -->
+<script src="js/angular.min.js"></script>
+<!-- i18n 처리 -->
+<script src="js/angular-locale_ko.js"></script>
+<!-- input에 한글자를 썼을때 한글처리를 위한 디렉티브 -->
+<script src="js/angular-ko.input.js"></script>
+<script>
+
+    var app = angular.module("exApp",["kr-input"]);
+
+    //생성자 함수
+    function Phone(name,price,release){
+        this.name = name;
+        this.price = price;
+        this.release = release;
+    };
+
+    app.controller("exCtrl",["$scope",function($scope){
+        $scope.phones =[
+            new Phone("스카이 IM-100",70400,new Date("2016-06-30")),
+            new Phone("LG G5",980000,new Date("2016-04-07")),
+            new Phone("아이폰5SE",564000,new Date("2016-04-12")),
+            new Phone("갤럭시 S7",760000,new Date("2016-03-07"))
+        ];
+    }]);
+
+</script>
+</body>
+</html>

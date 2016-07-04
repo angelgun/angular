@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="phoneApp">
+<head>
+    <meta charset="UTF-8">
+    <title>전화번호부</title>
+    <link rel="stylesheet" href="assets/css/reset.css" />
+    <link rel="stylesheet" href="assets/css/noto.sans.korea.css" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="assets/css/angular-material.min.css" />
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/favicons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="assets/favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/favicons/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="assets/favicons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="assets/favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="assets/favicons/manifest.json">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <style>
+        body {
+            font:200 20px 'bon',sans-serif;
+        }
+
+        #footer {
+            font-size:14px;
+            background-color:rgb(63,81,181);
+            color:#fff;
+        }
+
+    </style>
+</head>
+<body>
+    <md-toolbar id="header">
+        <div class="md-toolbar-tools">
+            <h1><a href="">전화번호부 앱</a></h1>
+            <!-- fill up the space between left and right area -->
+            <span flex></span>
+            <md-button href="#phone"><i class="fa fa-phone-square"></i> 전화번호목록</md-button>
+            <md-button href="#phone"><i class="fa fa-pencil-square"></i> 전화번호작성</md-button>
+        </div>
+    </md-toolbar>
+    <md-content layout-padding>
+        <md-list flex>
+            <md-subheader class="md-sticky">전화번호 목록</md-subheader>
+            <md-list-item class="md-3-line" ng-href="#phone">
+                <i class="fa fa-phone md-avatar-icon"></i>
+                    <div class="md-list-item-text">
+                    <h3>송중기</h3>
+                    <p>010-1234-2344</p>
+                    </div>
+            </md-list-item>
+            <md-list-item class="md-3-line" ng-href="#phone">
+                <i class="fa fa-phone md-avatar-icon"></i>
+                    <div class="md-list-item-text">
+                    <h3>송혜교</h3>
+                    <p>010-1234-2344</p>
+                    </div>
+            </md-list-item>
+            </md-list>
+    </md-content>
+    <md-content layout-padding>
+        <md-subheader class="md-sticky">전화번호 등록</md-subheader>
+        <form >
+            <fieldset>
+                <legend class="screen_out">전화번호 등록폼</legend>
+                <md-input-container>
+                    <label>이름</label>
+                    <input type="text" name="name" ng-model="user.title" required>
+                </md-input-container>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>전화번호1</label>
+                        <md-select name="phone1" ng-model="user.phone1" required>
+                            <md-option value="010" selected>010</md-option>
+                            <md-option value="011" >011</md-option>
+                            <md-option value="016" >016</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>전화번호2</label>
+                        <input type="text" name="phone2" ng-model="user.phone2" required>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>전화번호3</label>
+                        <input type="text" name="phone3" ng-model="user.phone3" required>
+                    </md-input-container>
+                </div>
+                <div class="md-block" flex-gt-sm>
+                    <h2>생년월일</h2>
+                    <md-datepicker md-placeholder="생일을 선택하세요."
+                                   ng-change="yyyy"
+                                   ng-model="phone.birth"></md-datepicker>
+                </div>
+                <div layout-gt-sm="row">
+                    <h2>성별</h2>
+                    <md-divider/>
+                    <md-radio-group ng-model="phone.gdner">
+                    <md-radio-button value="M" class="md-primary">
+                        남자
+                    </md-radio-button>
+                    <md-radio-button value="F" >
+                        여자
+                    </md-radio-button>
+                    </md-radio-group>
+                </div>
+                <p>
+                    <md-button class="md-primary md-raised">전화번호 등록</md-button>
+                    <md-button class="md-warn md-raised" type="button" ng-click="goBack($window)">등록 취소</md-button>
+                </p>
+            </fieldset>
+        </form>
+    </md-content>
+    <md-content id="footer" layout="row"  layout-align="center center" layout-padding>
+        &copy; 2016 ani.com
+    </md-content>
+<script src="assets/js/angular.min.js"></script>
+    <!-- angular material 의존성 -->
+<script src="assets/js/angular-animate.min.js"></script>
+<script src="assets/js/angular-aria.min.js"></script>
+<script src="assets/js/angular-messages.min.js"></script>
+    <!-- // angular material 의존성 -->
+
+<!-- angular material import -->
+<script src="assets/js/angular-material.min.js"></script>
+<script>
+
+    //https://www.google.com/design/spec/material-design/introduction.html
+
+    //https://material.angularjs.org/latest/
+
+    // angular material 예제
+    var app = angular.module("phoneApp", ["ngMaterial"]);
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<h2>전화번호</h2>
+<form ng-submit="registerPhone(phone)">
+    <fieldset>
+        <legend>전화번호 폼</legend>
+        <p>
+        <label>이름 :
+            <input type="text" name="name" ng-model="phone.name"/>
+        </label>
+        </p>
+        <p>
+        <label> 전화번호 :
+            <select name="phone1" ng-model="phone.phone1">
+                <option>010</option>
+                <option>011</option>
+                <option>016</option>
+                <option>017</option>
+                <option>019</option>
+            </select>
+            -
+            <input maxlength="4" name="phone2" ng-model="phone.phone2">
+            -
+            <input maxlength="4" name="phone3" ng-model="phone.phone3">
+        </label>
+        </p>
+        <p>
+            <div>
+                생년월일
+        <md-datepicker md-placeholder="생일을 선택하세요."
+                       ng-change="yyyy"
+                       ng-model="phone.birth"
+                ></md-datepicker>
+            </div>
+        </p>
+        <p>
+            <label>남자 <input type="radio" ng-model="phone.gender"
+                             name="gender" value="M" /></label>
+            <label>여자 <input type="radio" ng-model="phone.gender"
+                             name="gender" value="F" /></label>
+
+        </p>
+        <p>
+            <button>전화번호 </button>
+            <button type="button">취소</button>
+        </p>
+    </fieldset>
+</form>

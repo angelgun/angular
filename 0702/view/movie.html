@@ -1,0 +1,10 @@
+<h2 ng-bind="movie.name"></h2>
+<dl>
+    <dt>포스터</dt>
+    <dd><img src="poster/{{movie.poster}}" width="200"/></dd>
+    <dt>감독</dt>
+    <dd ng-bind="movie.director"></dd>
+    <dt>개봉일</dt>
+    <dd>{{movie.release}}</dd>
+</dl>
+<a href="#movie">목록으로</a>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="animationApp">
+<head>
+    <meta charset="UTF-8">
+    <title>angular의 애니메이션</title>
+    <style>
+        li {
+           list-style: none;
+            width:200px;
+            height:80px;
+            border:1px solid #eee;
+            box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24),
+                        0 17px 50px 0 rgba(0, 0, 0, 0.19);
+            text-align: center;
+            font:bold 30px/80px "malgunGothic",sans-serif;
+            cursor: pointer;
+            background:#fff;
+        }
+
+        /*
+        angular의 애니메이션은 클래스를 추가시키면 됩니다.
+
+        .ng-animate : 기본
+        .ng-enter : 추가의 기본
+        .ng-enter-active : 추가의 끝
+        .ng-leave : 삭제의 기본
+        .ng-leave-active : 삭제의 끝
+
+        */
+
+        li.ng-animate {
+
+        }
+        li.ng-enter {
+            transition: 1s ease;
+            transform:perspective(600px) translateZ(1000px) rotateX(1440deg);
+        }
+        li.ng-enter-active {
+            transform:perspective(600px) translateZ(0) rotateX(0deg);
+        }
+        li.ng-leave {
+            transition:.5s cubic-bezier(.51,-0.34,.68,1.19);
+            transform:translateX(0);
+        }
+        li.ng-leave-active {
+            transform:translateX(2000px);
+        }
+
+    </style>
+</head>
+<body ng-controller="animationCtrl">
+    <form ng-submit="registerPerson(people,name)">
+    <input placeholder="이름입력" ng-model="name"/>
+    </form>
+    <ul>
+        <li ng-repeat="person in people"
+            ng-click="removePerson(people,$index)">
+            {{person.name}}
+        </li>
+    </ul>
+<script src="js/angular.min.js"></script>
+<!-- 애니메이션 import -->
+<script src="js/angular-animate.min.js"></script>
+<script>
+    // angular의 애니메이션을 사용하기 위해서
+    // ngAnimate모듈을 불러옵니다.
+    // 애니메이션은 view가 변경, 모델에 추가, 삭제할때 발생
+    var app = angular.module("animationApp",["ngAnimate"]);
+
+    app.controller("animationCtrl",["$scope",function($scope) {
+
+        $scope.removePerson = function(people,$index) {
+            people.splice($index,1);
+        }//removePerson() end
+
+        $scope.registerPerson = function(people,name){
+            //유저가 입력한 이름으로 객체를 만들어서
+            //people배열에 추가
+            people.push({"name":name});
+
+            //input의 글자 비우기
+            $scope.name = "";
+
+        }//registerPerson() end
+
+        $scope.people = [
+            {name:"문별"},
+            {name:"화사"}
+        ];
+    }]);
+
+
+
+</script>
+</body>
+</html>

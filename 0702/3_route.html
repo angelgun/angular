@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html ng-app="routeApp">
+<head>
+<meta charset="UTF-8">
+<title>라우터 파라미터</title>
+<link rel="stylesheet" href="css/kakao.font.css"/>
+<style>
+	body {
+	margin:0;
+		font:100 18px 'Kakao',sans-serif;
+	}
+	#wrap {
+	width:1000px;margin:auto;
+		box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+	}
+	
+	#header {
+	width:980px;
+	background:#03A9F4;
+	border-top:1px solid #aaa;
+		padding:10px;
+		color:#fff;
+	}
+	
+	#header ul {
+		margin:0;
+		padding:0;
+		list-style: none;
+		overflow: hidden;
+	}
+	
+	#header li {
+		float:left;
+		padding:5px 10px;
+	}
+	#header a {
+		color:#fff;
+	}
+	#content {
+		padding: 10px;
+		min-height:500px;
+	}
+	#content a {
+		color:#03A9F4;
+	}
+	#footer {
+	height:100px;
+	line-height:100px;
+	text-align:center;
+        background: #03A9F4;
+		color:#fff;}
+	
+</style>
+</head>
+<body>
+	<div id="wrap">
+		<div id="header">
+			<h1>멋진영화사이트</h1>
+			<ul>
+				<li><a href="#movie">영화목록</a>
+				<li><a href="#insert">영화등록</a>
+				<li><a href="#mypage">마이페이지</a>
+			</ul>
+		</div>
+		<div id="content">
+			<!-- view가 변경 -->
+			<ng-view></ng-view>
+		</div>
+		<div id="footer">&copy; 2016 ani.com</div>
+	</div>
+<script src="js/angular.min.js"></script>
+<!-- router를 사용하기 위해서는 ngRoute모듈을 불러와야 함 -->
+<script src="js/angular-route.min.js"></script>
+<script>
+
+	var app = angular.module("routeApp",["ngRoute"]);
+
+	//여러 컨트롤러에서 사용할 데이터
+	app.value("movies",[
+		{"no":0,"poster":"p1.png","director":"롤랜드 에머리히","name":"인디펜던스 데이:리써전스","likes":106,"dislikes":12},
+		{"no":1,"poster":"p2.png","director":"이경미","name":"비밀은 없다","likes":106,"dislikes":12},
+		{"no":2,"poster":"p3.png","director":"존 파브로","name":"정글북","likes":106,"dislikes":12},
+		{"no":3,"poster":"p4.png","director":"박찬욱","name":"아가씨","likes":106,"dislikes":12},
+		{"no":4,"poster":"p5.png","director":"제임스 완","name":"컨저링2","likes":106,"dislikes":12},
+		{"no":5,"poster":"p6.png","director":"아리엘 브로멘","name":"크리미널","likes":106,"dislikes":12}
+	]);
+
+	app.controller("listCtrl",["$scope","movies",function($scope,movies){
+
+		$scope.movies = movies;
+
+	}]);
+
+	app.controller("movieCtrl",["$scope","movies","$routeParams",
+		                function($scope,movies,$routeParams) {
+		//$routeParams : 주소에 ':no'
+
+		var no = $routeParams.no;
+		//alert(no);
+
+		$scope.movie = movies[no];
+
+	}]);
+
+	//설정
+	app.config(function($routeProvider) {
+		//$routeProvider.when("주소",{뷰,컨트롤러});
+		$routeProvider.when("/movie",{templateUrl:"view/list.html",controller:"listCtrl"});
+
+		$routeProvider.when("/insert",{templateUrl:"view/insertForm.html"});
+
+		$routeProvider.when("/mypage",{templateUrl:"view/mypage.html"});
+
+		$routeProvider.when("/movie/:no",{
+			templateUrl:"view/movie.html",
+			controller:"movieCtrl"
+		});
+
+		//$routeProvider.otherwise() : 기본페이지 설정
+		$routeProvider.otherwise({redirectTo:"/movie"});
+	});
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>한글 이벤트</title>
+</head>
+<body>
+<input type="text" id="txt"/>
+<script src="js/jquery.js"></script>
+<script>
+    $("#txt").on("compositionstart", function (e) {
+        console.log("compositionstart");
+    }).on("compositionend", function () {
+        console.log("compositionend");
+    }).keyup(function () {
+        console.log("keyup");
+    });
+
+</script>
+</body>
+</html>
