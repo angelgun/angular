@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="phoneApp">
+<head>
+    <meta charset="UTF-8">
+    <title>전화번호부 앱</title>
+    <link rel="stylesheet" href="assets/css/angular-material.min.css">
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #wrap {
+            width:900px;
+            min-height:800px;
+            border:1px solid #424242;
+            margin:auto;
+            position: relative;
+        }
+
+        #header {
+            width:900px;
+            height:100px;
+            border-bottom:1px solid #424242;
+        }
+
+        #gnb {
+            list-style:none;
+            margin:0;
+            padding:0;
+            margin-left: 20px;
+        }
+
+        #gnb li {
+            float: left;
+            margin:2px;
+        }
+
+        #loader {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: #E5EFF1;
+            background-image: url("assets/img/loader.gif");
+            background-repeat: no-repeat;
+            background-position: center;
+
+        }
+
+        #content {
+           min-height:500px;
+        }
+
+        #footer {
+            width:900px;
+            height:100px;
+            border-top:1px solid #424242;
+            text-align: center;
+            line-height:100px;
+            position: absolute;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <div id="header" ui-view="headerView"></div>
+    <div id="content" ui-view="contentView"></div>
+    <div id="footer" ui-view="footerView"></div>
+</div>
+<div id="loader" ng-show="loader"></div>
+
+<script src="assets/js/angular.min.js"></script>
+<script src="assets/js/angular-resource.min.js"></script>
+<script src="assets/js/angular-animate.min.js"></script>
+<script src="assets/js/angular-aria.min.js"></script>
+<script src="assets/js/angular-messages.min.js"></script>
+<script src="assets/js/angular-locale_ko.js"></script>
+<!-- Angular Material Library -->
+<script src="assets/js/angular-material.min.js"></script>
+<!-- ui router import -->
+<script src="assets/js/angular-ui-router.min.js"></script>
+<!-- app.js import -->
+<script src="app/app.js"></script>
+<!-- service -->
+<script src="app/service.js"></script>
+<!--controller -->
+<script src="app/controller.js"></script>
+
+<!-- phonebook 예제는
+     route : ui router
+     ajax : $resource
+
+     https://github.com/angular-ui/ui-router
+     https://angular-ui.github.io/ui-router/site/#/api/ui.router
+
+ -->
+</body>
+</html>
