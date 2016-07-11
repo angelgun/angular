@@ -1,6 +1,6 @@
 
 
-var app = angular.module("phoneApp",[
+var app = angular.module("phoneApp",["phone.filter",
     "ngMaterial","ui.router","phone.service","phone.controller"]);
 
 app.run(function($rootScope) {
@@ -25,13 +25,35 @@ app.config(function($stateProvider,$urlRouterProvider){
                 }
             },
             contentView:{
-                templateUrl:"templates/list.html"
+                templateUrl:"templates/list.html",
+                controller:"listCtrl"
             },
             footerView:{
                 templateUrl:"templates/footer.html"
             }
         }
     });
+
+    $stateProvider.state("detail",{
+        url:"/phone/:id",
+        views:{
+            headerView:{
+                templateUrl:"templates/header.html",
+                controller:function($document) {
+                    $document[0].title="전화번호 상세";
+                }
+            },
+            contentView:{
+                templateUrl:"templates/detail.html",
+                controller:"detailCtrl"
+            },
+            footerView:{
+                templateUrl:"templates/footer.html"
+            }
+        }
+    });
+
+
 
     $stateProvider.state("search",
         {
@@ -51,6 +73,26 @@ app.config(function($stateProvider,$urlRouterProvider){
                 }
             }
         });
+        
+        $stateProvider.state("update",{
+           url:"/update/:id",
+            views:{
+                headerView:{
+                    templateUrl:"templates/header.html",
+                    controller:function($document) {
+                        $document[0].title="전화번호 수정";
+                    }
+                },
+                contentView:{
+                    templateUrl:"templates/form.html",
+                    controller:"updateCtrl"
+                },
+                footerView:{
+                    templateUrl:"templates/footer.html"
+                }
+            }
+        });
+    
         $stateProvider.state("register",
         {
             url:"/register",

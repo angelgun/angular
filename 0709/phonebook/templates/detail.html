@@ -1,0 +1,13 @@
+<h2>{{phone.name}}님의 전화번호</h2>
+<dl>
+    <dt>이름</dt>
+    <dd>{{phone.name}}</dd>
+    <dt>전화번호</dt>
+    <dd>{{phone.phone1}}-{{phone.phone2}}-{{phone.phone3}}</dd>
+    <dt>생년월일</dt>
+    <dd>{{phone.birth|date:"yyyy년 M월 d일"}}</dd>
+    <dt>성별</dt>
+    <dd>{{phone.gender|genderFilter}}</dd>
+</dl>
+<a href="#update/{{phone._id.$oid}}">수정</a>
+<button ng-click="deletePhone(phone)">삭제</button>

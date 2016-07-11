@@ -1,4 +1,4 @@
 <h2>전화번호부</h2>
 <ul>
-    <li ><a href=""></a></li>
+    <li ng-repeat="phone in list"><a href="#phone/{{phone._id.$oid}}">{{phone.name}}</a></li>
 </ul>

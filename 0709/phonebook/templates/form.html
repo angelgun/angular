@@ -1,7 +1,7 @@
-<h2>전화번호</h2>
-<form ng-submit="registerPhone(phone)">
+<h2>전화번호 {{type}}</h2>
+<form ng-submit="executePhone(phone)">
     <fieldset>
-        <legend>전화번호 폼</legend>
+        <legend>전화번호 {{type}}폼</legend>
         <p>
         <label>이름 :
             <input type="text" name="name" ng-model="phone.name"/>
@@ -39,7 +39,7 @@
 
         </p>
         <p>
-            <button>전화번호 </button>
+            <button>전화번호 {{type}}</button>
             <button type="button">취소</button>
         </p>
     </fieldset>

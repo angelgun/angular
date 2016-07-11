@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+  </head>
+  <!-- on-touch : ionic 디렉티브 -->
+  <body ng-app="starter" ng-controller="listCtrl" on-touch="hideLoader()">
+    <ion-pane>
+      <!-- align-title : center 는 안드로이드에서도 글자 가운데 -->
+      <ion-header-bar class="bar-dark" align-title="center">
+        <!-- header-bar안에서 버튼은 각각 왼쪽,정렬 -->
+        <button class="button button-clear ion-minus-circled" on-touch="showDeleteBtn()"> 삭제</button>
+        <h1 class="title">리스트예제</h1>
+        <button class="button button-clear ion-navicon-round" on-touch="showReorderBtn()"> 정렬</button>
+      </ion-header-bar>
+      <ion-content>
+        <!-- show-delete : 삭제버튼 보여주기 여부
+             show-reorder : 정렬버튼 보여주기 여부
+         -->
+        <ion-list show-delete="deleteFlag" show-reorder="reorderFlag">
+          <ion-item ng-repeat="item in items" class="item-remove-animate">
+            <label class="toggle">
+              <input type="checkbox" ng-model="item.end">
+              <div class="track">
+                <div class="handle"></div>
+              </div>
+            </label>
+            <span>{{item.title}}</span>
+            <!-- delete button, reorder button, option button -->
+            <ion-delete-button on-touch="deleteItem(items,$index)" class="button button-assertive ion-minus-circled"></ion-delete-button>
+            <ion-reorder-button on-reorder="reorderItem(items,item,$fromIndex,$toIndex)" class="button ion-navicon-round"></ion-reorder-button>
+            <ion-option-button class="button button-assertive">옵션1</ion-option-button>
+            <ion-option-button class="button button-positive">옵션2</ion-option-button>
+          </ion-item>
+        </ion-list>
+        <hr>
+        <ion-list>
+          <ion-item>
+            <!-- 와이파이 켜고끄고 설정용 -->
+            <ion-toggle>
+              아이템1
+            </ion-toggle>
+            <ion-toggle>
+              아이템2
+            </ion-toggle>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+      <ion-footer-bar class="bar-dark">
+        <p class="title">&copy; 2016 ani.com</p>
+      </ion-footer-bar>
+    </ion-pane>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+/* Empty. Add your own CSS if you like */
+body {
+  cursor: url(../img/finger.png),default;
+}
+
+.item span,.item label {
+  vertical-align: middle;
+}

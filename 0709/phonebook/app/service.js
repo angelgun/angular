@@ -6,5 +6,4 @@ angular.module("phone.service",["ngResource"])
                {apiKey:"mEnc5U1gz4CKrRrgzKUUkIo2nLSbPNyO",
                    id:"@_id.$oid"},
                {update:{method:"PUT"}});
-
        });
