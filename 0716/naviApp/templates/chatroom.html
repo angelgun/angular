@@ -1,0 +1,19 @@
+<ion-view title="XXX님과 채팅">
+  <ion-content class="content-stable padding" delegate-handle="mainScroll">
+    <ul>
+      <li ng-repeat="message in messages" class="msg {{message.type=='you'?'you':'my'}}">{{message.msg}}</li>
+    </ul>
+  </ion-content>
+  <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
+    <label class="item-input-wrapper">
+      <input type="text" placeholder="할 말 입력"
+             on-return="sendMessage()"
+             ng-model="data.message"
+             on-focus="inputUp()"
+             on-blur="inputDown()" />
+    </label>
+    <button class="button button-calm" on-touch="sendMessage()">
+      보내기
+    </button>
+  </ion-footer-bar>
+</ion-view>
