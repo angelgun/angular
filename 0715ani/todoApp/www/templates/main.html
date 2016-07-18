@@ -1,0 +1,21 @@
+<ion-view title="내 할일 목록">
+  <ion-content>
+    <h2 class="title">할 일 목록</h2>
+   <ion-list>
+     <ion-item ng-repeat="todo in todos">
+       <label class="toggle">
+         <input type="checkbox" ng-change="updateTodo(todo)" ng-model="todo.end"/>
+         <div class="track">
+            <div class="handle"></div>
+         </div>
+       </label>
+       <span class="title">{{todo.title}}</span>
+       <ion-option-button ng-click="deleteTodo(todo)" class="button button-assertive">삭제</ion-option-button>
+     </ion-item>
+   </ion-list>
+  </ion-content>
+  <ion-footer-bar class="bar-calm">
+    <h2 class="title">&copy; 2016 ani.com</h2>
+    <button ng-click="displayTodoForm()" class="button icon ion-edit"> 할 일 쓰기</button>
+  </ion-footer-bar>
+</ion-view>

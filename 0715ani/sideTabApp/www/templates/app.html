@@ -1,0 +1,57 @@
+<ion-side-menus>
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button></ion-nav-back-button>
+      <!-- 사이드메뉴 버튼-->
+      <!-- side : left는 왼쪽 -->
+      <ion-nav-buttons side="left">
+        <!-- menu-toggle="left" 사이드메뉴는 그냥 작동
+          (state가 필요없음)
+         -->
+        <button menu-toggle="left" class="button icon button-clear ion-navicon-round"></button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <!-- tab을 지정(tab은 state가 있음) -->
+    <ion-tabs class="tabs-icon-top">
+      <ion-tab href="#app/home"
+        title="밴드홈" icon-on="ion-ios-home" icon-off="ion-ios-home-outline">
+        <ion-nav-view name="home"></ion-nav-view>
+      </ion-tab>
+      <!-- href는 주소 / ui-sref는 state지정 -->
+      <ion-tab ui-sref="app.news"
+        title="새글 피드" icon-on="ion-ios-paper" icon-off="ion-ios-paper-outline">
+        <ion-nav-view name="news"></ion-nav-view>
+      </ion-tab>
+      <ion-tab ui-sref="app.chat"
+        title="채팅" icon-on="ion-ios-chatboxes" icon-off="ion-ios-chatboxes-outline">
+        <ion-nav-view name="chatting"></ion-nav-view>
+      </ion-tab>
+    </ion-tabs>
+    <!--//tabs -->
+
+  </ion-side-menu-content>
+  <!-- side : left는 왼쪽 -->
+  <ion-side-menu side="left">
+    <ion-header-bar class="bar-assertive">
+      <h2 class="title">사이드 메뉴</h2>
+    </ion-header-bar>
+    <ion-content>
+      <ion-list>
+        <!-- menu-close : 메뉴 클릭시 닫힘 -->
+        <ion-item menu-close ui-sref="app.home">
+          <i class="ion-ios-home"></i>
+            밴드홈
+        </ion-item>
+        <ion-item menu-close href="#app/news">
+          <i class="ion-ios-paper"></i>
+            새글 피드
+        </ion-item>
+        <ion-item menu-close ui-sref="app.chat">
+          <i class="ion-ios-chatboxes"></i>
+          채팅
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

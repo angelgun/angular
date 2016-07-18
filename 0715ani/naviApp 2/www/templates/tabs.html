@@ -1,0 +1,24 @@
+<!-- ion-tabs : 텝전체 -->
+<ion-tabs class="tabs-icon-top {{hideTab?'tabs-item-hide':''}}">
+  <!-- 하나의 텝 -->
+  <ion-tab title="친구" ui-sref="tabs.friends"
+           icon-off="ion-ios-person-outline"
+           icon-on="ion-ios-person">
+    <ion-nav-view name="friends"></ion-nav-view>
+  </ion-tab>
+  <ion-tab title="채팅" ui-sref="tabs.chatting"
+           icon-off="ion-ios-chatbubble-outline"
+           icon-on="ion-ios-chatbubble">
+    <ion-nav-view name="chatting"></ion-nav-view>
+  </ion-tab>
+  <ion-tab title="채널" ui-sref="tabs.channel"
+ icon-on="ion-ios-list"
+  icon-off="ion-ios-list-outline">
+    <ion-nav-view name="channel"></ion-nav-view>
+  </ion-tab>
+  <ion-tab title="더보기" ui-sref="tabs.more"
+  icon-on="ion-ios-more"
+  icon-off="ion-ios-more-outline">
+    <ion-nav-view name="more"></ion-nav-view>
+  </ion-tab>
+</ion-tabs>

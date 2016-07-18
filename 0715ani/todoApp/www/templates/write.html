@@ -1,0 +1,18 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h3 class="title">할 일 쓰기</h3>
+    <button class="button icon ion-close" ng-click="hideTodoForm()"></button>
+  </ion-header-bar>
+  <ion-content class="padding">
+    <form ng-submit="writeTodo(title)">
+    <ion-list>
+      <label class="item item-input">
+        <span class="input-label">할 일</span>
+        <input type="text" placeholder="할 일 입력" ng-model="title"/>
+      </label>
+    </ion-list>
+      <button class="button button-block
+       button-positive icon ion-edit"> 글쓰기</button>
+    </form>
+  </ion-content>
+</ion-modal-view>

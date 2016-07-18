@@ -1,0 +1,12 @@
+<ion-view title="채팅">
+  <ion-content>
+    <h1 class="title">채팅목록</h1>
+    <ion-list>
+      <ion-item ng-repeat="chatting in chattingList" href="#tabs/chatting/2" class="item-thumbnail-left">
+        <img src="{{chatting.profile}}"/>
+        <h2 ng-bind="chatting.title"></h2>
+        <p ng-bind="chatting.msg"></p>
+      </ion-item>
+      </ion-list>
+  </ion-content>
+</ion-view>

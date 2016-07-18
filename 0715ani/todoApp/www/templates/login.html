@@ -1,0 +1,25 @@
+<ion-view title="내 할일">
+  <ion-content class="padding">
+    <img src="img/003.gif" width="100%"/>
+    <form ng-submit="login(user)">
+    <ion-list>
+          <label class="item item-input">
+            <span class="input-label">아이디</span>
+            <input type="text" placeholder="아이디" ng-model="user.id"/>
+          </label>
+          <label class="item item-input">
+            <span class="input-label">비밀번호</span>
+            <input type="password" placeholder="비밀번호" ng-model="user.password"/>
+          </label>
+    </ion-list>
+      <button class="button-block button-positive button ion-log-in">로그인</button>
+      <a href="#join" class="button button-block button-assertive ion-person-add">회원가입</a>
+    </form>
+  </ion-content>
+</ion-view>
+
+
+
+
+
+
